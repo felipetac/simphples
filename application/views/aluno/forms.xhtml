@@ -1,0 +1,39 @@
+<form metal:define-macro="buscar" id="formBuscar" action="aluno/buscar" method="post" class="ui-corner-all">
+	<tal:block metal:use-macro="form-aluno-nome" />
+	<div class="form-actions">
+		<button type="submit" class="btnBuscar">Buscar</button>
+		<a href="aluno" class="btnLimpar">Limpar</a>
+	</div>
+</form>
+
+<form metal:define-macro="gravar" id="formGravar" action="aluno/gravar" method="post" class="ui-corner-all" style="position: relative; top:7px;">
+	<input type="hidden" id="id" name="id" tal:attributes="value id | ''" />
+	<tal:block metal:use-macro="form-aluno-nome" />
+	
+	<label for="turma">Turma</label>	   
+	<select id="turma" name="turma">
+	<option value="" />
+	<tal:block tal:repeat="object turmas">
+		<option tal:define="id object/getId; selected selectedTurma | nothing" 
+				tal:attributes="value id; selected php: id EQ selected" 
+				tal:content="object/getNome" />
+	</tal:block>  
+    </select><br />
+		   
+	<label for="observacao">Observações</label>
+	<input type="text" id="observacao" name="observacao" 
+	       style="width: 400px !important;" 
+		   tal:attributes="value observacao | ''" /><br />
+		   	  
+	<div class="form-actions">
+		<button type="submit" class="btnSalvar">Salvar</button>
+		<a href="aluno" class="btnCancelar">Cancelar</a>
+	</div>
+</form>
+
+<div metal:define-macro="form-aluno-nome" tal:omit-tag="">
+	<label for="nome">Nome</label> 
+	<input type="text" id="nome" name="nome" 
+	       style="width: 400px !important;" 
+		   tal:attributes="value nome | ''" /><br />
+</div>

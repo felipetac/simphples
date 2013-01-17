@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html metal:define-macro="master" xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+    <head>
+        <title>
+        	Escola - 
+        	<tal:block content="title" />
+        	<tal:block tal:define="subtitle subtitle | nothing" 
+        			   tal:condition="exists: subtitle" 
+        			   tal:content=" string: - ${subtitle}" />
+        </title>    
+        <meta metal:use-macro="application/layouts/meta.xhtml/meta" /> 
+             
+        <base tal:attributes="href base" />
+                     
+        <link metal:use-macro="application/layouts/resources.xhtml/css" />
+		<script metal:use-macro="application/layouts/resources.xhtml/javascript"></script>             
+    </head>
+    <body>
+        <div id="header" metal:use-macro="application/layouts/header.xhtml/header"></div>
+        <div id="application-content" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+            <div metal:use-macro="application/layouts/navigation.xhtml/navigation"></div>
+            <div id="dynamic-content" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+                <tal:block metal:use-macro="application/layouts/msgs.xhtml/error" />
+				<tal:block metal:use-macro="application/layouts/msgs.xhtml/success" />
+            	<div metal:define-slot="main" tal:omit-tag=""></div>
+            </div>
+        </div>
+        <div metal:use-macro="application/layouts/footer.xhtml/footer"></div>
+    </body>
+</html>
