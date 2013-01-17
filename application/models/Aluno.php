@@ -92,18 +92,4 @@ class Aluno extends Model {
                 ->setParameter("nome", "%".$nome."%")
                 ->getResult();
     }
-
-    public function save($params) {
-        $em = Database::getEntityManager();
-        $id = empty($params['id']) ? 0 : $params['id'];
-        $entity = $em->find(get_class($this), $id);
-        if (empty($entity)) {
-            $entity = $this;
-        }
-        $entity->setParams($params, $em);
-        $em->persist($entity);
-        $em->flush();
-        return true;
-    }
-
 }
