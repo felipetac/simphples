@@ -22,6 +22,19 @@ class Model {
             return true;
         }
     }
+    
+    public function save($params) {
+        $em = Database::getEntityManager();
+        $id = empty($params['id']) ? 0 : $params['id'];
+        $entity = $em->find(get_class($this), $id);
+        if (empty($entity)) {
+            $entity = $this;
+        }
+        $entity->setParams($params, $em);
+        $em->persist($entity);
+        $em->flush();
+        return true;
+    }
 
     public function find($id, $entity = false) {
         $em = Database::getEntityManager();
