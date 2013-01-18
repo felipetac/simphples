@@ -1,3 +1,4 @@
 /composer.lock
 /vendor/
+/application/configs/database.ini
 /application/configs/defines.php
