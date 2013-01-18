@@ -2,9 +2,9 @@
 
 namespace application\models;
 
-use commons\Model;
-use commons\Database;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use commons\Model,
+    commons\Database,
+    Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * @Entity

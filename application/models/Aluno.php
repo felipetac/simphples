@@ -2,10 +2,10 @@
 
 namespace application\models;
 
-use commons\Database;
-use commons\Model;
-use application\models\Historico;
-use application\models\Turma;
+use commons\Database,
+    commons\Model,
+    application\models\Historico,
+    application\models\Turma;
 
 /**
  * @Entity

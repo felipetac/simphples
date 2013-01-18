@@ -2,8 +2,8 @@
 
 namespace application\controllers;
 
-use application\models\Turma;
-use commons\Controller;
+use application\models\Turma,
+    commons\Controller;
 
 final class Professor extends Controller {
 

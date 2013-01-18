@@ -1,9 +1,7 @@
 <?php
 
-define('SITE_PATH',realpath(dirname("application")).'/');
-define('MODEL_PATH', SITE_PATH . 'application/models');
-
-require 'vendor/autoload.php';
+require_once 'application/configs/defines.php';
+require_once 'vendor/autoload.php';
 
 $classLoader = new Doctrine\Common\ClassLoader();
 $classLoader->register();
