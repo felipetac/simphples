@@ -18,7 +18,7 @@ final class Database {
         Setup::registerAutoloadPEAR();
         $isDevMode = true;
         $config = Setup::createAnnotationMetadataConfiguration(array(MODEL_PATH), $isDevMode);
-        $conn = parse_ini_file(SITE_PATH . 'application/configs/database.ini');
+        $conn = parse_ini_file(DATABASE_PATH);
         return EntityManager::create($conn, $config);
     }
 
