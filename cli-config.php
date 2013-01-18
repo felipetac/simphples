@@ -8,7 +8,7 @@ require 'vendor/autoload.php';
 $classLoader = new Doctrine\Common\ClassLoader();
 $classLoader->register();
 
-use Commons\Database;
+use commons\Database;
 
 $database = new Database();
 $entityManager = $database->getEntityManager();
