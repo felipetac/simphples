@@ -30,3 +30,9 @@
 		  </p>
 	 </div>
 </div>
+
+
+<span metal:define-macro="error_validate" class="warningMsg ui-state-highlight ui-corner-all msg" tal:condition="errormsg" style="display: inline-block;">
+		<span class="ui-icon ui-icon-alert"></span>
+		<span class="msg-text" tal:content="errormsg">Mensagem de Erro</span>
+</span>

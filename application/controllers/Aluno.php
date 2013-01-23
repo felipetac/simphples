@@ -38,11 +38,8 @@ final class Aluno extends Controller {
         $this->view->set("title", "Editar Aluno");
         $turma = new Turma();
         $this->view->set("turmas", $turma->findAll("nome"));
-        $model = $this->model->find($id);
-        $this->view->set("id", $id);
-        $this->view->set("nome", $model->getNome());
-        $this->view->set("selectedTurma", $model->getTurma()->getId());
-        $this->view->set("observacao", $model->getHistorico()->getObservacoes());
+        $model = $this->model->find($id);        
+        $this->view->set("aluno", $model);
         $this->view->render("aluno/gravar");
     }
 
@@ -59,7 +56,13 @@ final class Aluno extends Controller {
         if ($this->model->save($params)) {
             $this->msg("success", "Item salvo com sucesso!");
         } else {
-            $this->msg("error", "Item não pode ser salvo!");
+            $this->msg("error", "Item não pode ser salvo!");            
+            $this->model->setParams($params);
+            $this->view->set("title", "Editar Aluno");
+            $turma = new Turma();
+            $this->view->set("turmas", $turma->findAll("nome"));
+            $this->view->set("aluno", $this->model);
+            $this->view->render("aluno/gravar");
         }
         $this->redirect("aluno");
     }

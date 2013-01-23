@@ -7,14 +7,20 @@
 </form>
 
 <form metal:define-macro="gravar" id="formGravar" action="aluno/gravar" method="post" class="ui-corner-all" style="position: relative; top:7px;">
-	<input type="hidden" id="id" name="id" tal:attributes="value id | ''" />
+	<input type="hidden" id="id" name="id" tal:attributes="value aluno/getId | ''" />
 	<tal:block metal:use-macro="form-aluno-nome" />
 	
-	<label for="turma">Turma</label>	   
+	
+	<label for="nome">Aniversario</label>
+	<input type="text" id="aniversario" name="aniversario" style="width: 400px !important;" tal:attributes="value aluno/getAniversario | ''" />
+	<tal:block tal:define="errormsg aluno/erros/aniversario | nothing" metal:use-macro="application/layouts/msgs.xhtml/error_validate"  />
+	<br />
+	
+	<label for="turma">Turma</label>
 	<select id="turma" name="turma">
 	<option value="" />
 	<tal:block tal:repeat="object turmas">
-		<option tal:define="id object/getId; selected selectedTurma | nothing" 
+		<option tal:define="id object/getId; selected aluno/getTurma/getId | nothing" 
 				tal:attributes="value id; selected php: id EQ selected" 
 				tal:content="object/getNome" />
 	</tal:block>  
@@ -23,7 +29,7 @@
 	<label for="observacao">Observações</label>
 	<input type="text" id="observacao" name="observacao" 
 	       style="width: 400px !important;" 
-		   tal:attributes="value observacao | ''" /><br />
+		   tal:attributes="value aluno/getHistorico/getObservacoes | ''" /><br />
 		   	  
 	<div class="form-actions">
 		<button type="submit" class="btnSalvar">Salvar</button>
@@ -35,5 +41,7 @@
 	<label for="nome">Nome</label> 
 	<input type="text" id="nome" name="nome" 
 	       style="width: 400px !important;" 
-		   tal:attributes="value nome | ''" /><br />
+		   tal:attributes="value aluno/getNome | nome | ''" />
+	<tal:block tal:define="errormsg aluno/erros/nome | nothing" metal:use-macro="application/layouts/msgs.xhtml/error_validate"  />
+	<br />
 </div>

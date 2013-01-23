@@ -1,6 +1,7 @@
 {
     "require": {
         "doctrine/orm": "2.3.x-dev",
-        "phptal/phptal": "dev-master"
+        "phptal/phptal": "dev-master",
+        "Respect/Validation": "dev-master"
     }
 }

@@ -81,23 +81,15 @@ class Controller {
     public function msg($type, $msg) {
         switch ($type) {
             case "error":
-                $ty = $type;
-                break;
             case "success":
-                $ty = $type;
-                break;
             case "warning":
-                $ty = $type;
+                $lista = $this->session->get($type) != null ? $this->session->get($type) : array();            
+                $lista[] = $msg;
+                $this->session->set($type, $lista);
                 break;
             default:
-                $ty = false;
-        }
-        if ($ty) {
-            $lista = $this->session->get($ty) != null ? $this->session->get($ty) : array();
-            $lista[] = $msg;
-            $this->session->set($ty, $lista);
-        } else {
-            throw new Exception("Não foi possível montar a mensagem do sistema!");
+                throw new Exception("Não foi possível montar a mensagem do sistema!");
+                break;
         }
     }
 

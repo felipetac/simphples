@@ -31,9 +31,14 @@ class Model {
             $entity = $this;
         }
         $entity->setParams($params, $em);
-        $em->persist($entity);
-        $em->flush();
-        return true;
+        $this->erros = $entity->validate();
+        
+        if (!is_array($this->erros)){
+            $em->persist($entity);
+            $em->flush();
+            return true;
+        }
+        return false;
     }
 
     public function find($id, $entity = false) {
