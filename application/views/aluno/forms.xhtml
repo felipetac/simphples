@@ -10,10 +10,8 @@
 	<input type="hidden" id="id" name="id" tal:attributes="value aluno/getId | ''" />
 	<tal:block metal:use-macro="form-aluno-nome" />
 	
-	
 	<label for="nome">Aniversario</label>
 	<input type="text" id="aniversario" name="aniversario" style="width: 400px !important;" tal:attributes="value aluno/getAniversario | ''" />
-	<tal:block tal:define="errormsg aluno/erros/aniversario | nothing" metal:use-macro="application/layouts/msgs.xhtml/error_validate"  />
 	<br />
 	
 	<label for="turma">Turma</label>
@@ -40,8 +38,8 @@
 <div metal:define-macro="form-aluno-nome" tal:omit-tag="">
 	<label for="nome">Nome</label> 
 	<input type="text" id="nome" name="nome" 
-	       style="width: 400px !important;" 
-		   tal:attributes="value aluno/getNome | nome | ''" />
-	<tal:block tal:define="errormsg aluno/erros/nome | nothing" metal:use-macro="application/layouts/msgs.xhtml/error_validate"  />
+	       style="width: 400px !important;"
+                   tal:define="error aluno/errors/NomeError | Nothing; wrng string:input-warning"
+		   tal:attributes="value aluno/getNome | nome | ''; class php: (error) ? wrng : ''" />
 	<br />
 </div>

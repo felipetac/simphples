@@ -40,7 +40,7 @@ class Controller {
         if ($this->session->get("warning")) {
             $this->view->set("warning", $this->session->get("warning"));
             $this->session->destroy("warning");
-        }
+        }      
     }
 
     /**
@@ -83,9 +83,13 @@ class Controller {
             case "error":
             case "success":
             case "warning":
-                $lista = $this->session->get($type) != null ? $this->session->get($type) : array();            
-                $lista[] = $msg;
-                $this->session->set($type, $lista);
+                if (!is_array($msg)) {
+                    $lista = $this->session->get($type) != null ? $this->session->get($type) : array();
+                    $lista[] = $msg;
+                    $this->session->set($type, $lista);
+                } else {
+                    $this->session->set($type, $msg);
+                }
                 break;
             default:
                 throw new Exception("Não foi possível montar a mensagem do sistema!");

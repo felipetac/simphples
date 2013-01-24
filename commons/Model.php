@@ -38,7 +38,7 @@ class Model {
             $em->flush();
             return true;
         }
-        return false;
+        return $this->erros;
     }
 
     public function find($id, $entity = false) {

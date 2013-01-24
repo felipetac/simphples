@@ -10,6 +10,8 @@ final class Aluno extends Controller {
     public function __construct() {
         parent::__construct();
         $this->view->set("mainNavItem", "Alunos");
+        $turma = new Turma();
+        $this->view->set("turmas", $turma->findAll("nome"));
     }
 
     public function index() {
@@ -29,8 +31,6 @@ final class Aluno extends Controller {
 
     public function novo() {
         $this->view->set("title", "Novo Aluno");
-        $turma = new Turma();
-        $this->view->set("turmas", $turma->findAll("nome"));
         $this->view->render("aluno/gravar");
     }
 
@@ -53,18 +53,16 @@ final class Aluno extends Controller {
     }
 
     public function gravar($params) {
-        if ($this->model->save($params)) {
+        $result = $this->model->save($params);
+        if (!is_array($result)) {
             $this->msg("success", "Item salvo com sucesso!");
+            $this->redirect("aluno");
         } else {
-            $this->msg("error", "Item não pode ser salvo!");            
-            $this->model->setParams($params);
+            $this->msg("warning", $result);
             $this->view->set("title", "Editar Aluno");
-            $turma = new Turma();
-            $this->view->set("turmas", $turma->findAll("nome"));
             $this->view->set("aluno", $this->model);
             $this->view->render("aluno/gravar");
-        }
-        $this->redirect("aluno");
+        }     
     }
 
 }

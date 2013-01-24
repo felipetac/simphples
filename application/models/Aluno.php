@@ -79,16 +79,23 @@ class Aluno extends Model {
     }
     
     public function validate(){
-        $validator = v::attribute('nome', v::string()->notEmpty())
-                    ->attribute('aniversario', v::date()->minimumAge(18)->notEmpty());
+        $validator = v::attribute('nome', v::allOf(v::string()->setName("NomeIsString"), 
+                                          v::notEmpty()->setName("NomeIsEmpty"))->setName("NomeError"))
+                    ->attribute('aniversario', v::allOf(v::date()->setName("NiverIsDate"), 
+                                               v::minimumAge(18)->setName("NiverMinimumAge"), 
+                                               v::notEmpty()->setName("NiverIsEmpty")));
         try{
             $validator->assert($this);
         } catch (\InvalidArgumentException $e) {
-            $errors = $e->findMessages(array(
-                'nome' => 'Erro no {{name}}',
-                'aniversario' => 'Erro no {{name}}'
+            $this->errors = $e->findMessages(array(
+                'NomeError' => 'Erro(s) no campo "Nome"',
+                'NomeIsString' => 'O "Nome" não é uma String',
+                'NomeIsEmpty' => 'O "Nome" é de preenchimento obrigatório',
+                'NiverIsDate' => 'O "Aniversário" não é uma data válida!',
+                'NiverMinimumAge' => 'O "Aniversário" precisa ser preenchido com uma data igual ou superior a 18 anos',
+                'NiverIsEmpty' => 'O "Aniversário" é de preenchimento obrigatório'
             ));
-            return $errors;
+            return $this->errors;
         }
         return true;
     }

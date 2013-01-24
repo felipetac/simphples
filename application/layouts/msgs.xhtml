@@ -10,14 +10,16 @@
 </div>
 
 <div metal:define-macro="warning" class="warningMsgContainer"
-     tal:condition="exists: warnings">
+     tal:condition="exists: warning">
+    <tal:block tal:repeat="item warning">
      <div class="warningMsg ui-state-highlight ui-corner-all msg" 
-	 	  tal:repeat="item warning">
+	 	  tal:condition="item">
 	     <p>
 			<span class="ui-icon ui-icon-alert"></span> <span class="msg-text"
 				  tal:content="item">Mensagem de Alerta</span>
 		 </p>
 	 </div>
+        </tal:block>
 </div>
 
 <div metal:define-macro="success" class="successMsgContainer" 
