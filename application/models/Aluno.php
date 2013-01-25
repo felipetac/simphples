@@ -55,11 +55,11 @@ class Aluno extends Model {
     }
 
     public function setAniversario($aniversario) {
-        $this->aniversario = $aniversario ? new \DateTime(implode('-',array_reverse(explode('/', $aniversario)))) : '';
+        $this->aniversario = $this->setDate($aniversario);
     }
 
     public function getAniversario() {        
-        return $this->aniversario ? $this->aniversario->format('d/m/Y') : NULL;
+        return $this->getDate($this->aniversario);
     }
     
     public function setHistorico(Historico $historico) {

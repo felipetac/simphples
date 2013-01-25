@@ -9,7 +9,8 @@
 
 namespace commons;
 
-use commons\Database;
+use commons\Database,
+    Respect\Validation\Validator as v;
 
 class Model {
 
@@ -63,5 +64,13 @@ class Model {
             $dql = "SELECT e FROM " . get_class($this) . " e";
         }
         return $em->createQuery($dql)->getResult();
+    }
+    
+    protected function setDate($date){
+        return $date && v::date()->validate($date) ? new \DateTime(implode('-',array_reverse(explode('/', $date)))) : $date;
+    }
+    
+    protected function getDate($date, $format='d/m/Y'){
+        return $date && v::date()->validate($date) ? $date->format($format) : $date;
     }
 }
