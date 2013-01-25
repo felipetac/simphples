@@ -53,14 +53,14 @@ final class Aluno extends Controller {
     }
 
     public function gravar($params) {
-        $result = $this->model->save($params);
-        if (!is_array($result)) {
+        $entity = $this->model->save($params);
+        if (!is_object($entity)) {
             $this->msg("success", "Item salvo com sucesso!");
             $this->redirect("aluno");
         } else {
-            $this->msg("warning", $result);
+            $this->msg("warning", $entity->erros);
             $this->view->set("title", "Editar Aluno");
-            $this->view->set("aluno", $this->model);
+            $this->view->set("aluno", $entity);
             $this->view->render("aluno/gravar");
         }     
     }

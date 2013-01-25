@@ -32,14 +32,14 @@ class Model {
             $entity = $this;
         }
         $entity->setParams($params, $em);
-        $this->erros = $entity->validate();
+        $entity->erros = $entity->validate();
         
-        if (!is_array($this->erros)){
+        if (!is_array($entity->erros)){
             $em->persist($entity);
             $em->flush();
             return true;
         }
-        return $this->erros;
+        return $entity;
     }
 
     public function find($id, $entity = false) {
@@ -67,7 +67,8 @@ class Model {
     }
     
     protected function setDate($date){
-        return $date && v::date()->validate($date) ? new \DateTime(implode('-',array_reverse(explode('/', $date)))) : $date;
+        $date = implode('-',array_reverse(explode('/', $date)));
+        return $date && v::date()->validate($date) ? new \DateTime($date) : $date;
     }
     
     protected function getDate($date, $format='d/m/Y'){

@@ -120,7 +120,7 @@ class Aluno extends Model {
             $em->persist($historico);
             $this->historico = $historico;
         } else {
-            $historico = $this->getHistorico();
+            $historico = $this->getHistorico();            
             $historico->setObservacoes($obs);
             $this->historico = $historico;
         }
