@@ -54,7 +54,7 @@ final class Aluno extends Controller {
 
     public function gravar($params) {
         $entity = $this->model->save($params);
-        if (!is_object($entity)) { //filipe gay
+        if (!is_object($entity)) {
             $this->msg("success", "Item salvo com sucesso!");
             $this->redirect("aluno");
         } else {
