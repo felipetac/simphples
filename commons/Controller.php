@@ -9,13 +9,10 @@
 
 namespace commons;
 
-use \ReflectionClass as ReflectionClass,
-    commons\Session,
+use \ReflectionClass as ReflectionClass,    
     commons\View;
 
 class Controller {
-
-    protected $session;
     public $view;
     protected $model;
 
@@ -25,24 +22,10 @@ class Controller {
      * @return void
      */
     public function __construct() {
-        $this->session = new Session();
-        $this->session->start();
         $this->view = new View();
         $this->model = $this->getModel();
-        if ($this->session->get("success")) {
-            $this->view->set("success", $this->session->get("success"));
-            $this->session->destroy("success");
-        }
-        if ($this->session->get("error")) {
-            $this->view->set("error", $this->session->get("error"));
-            $this->session->destroy("error");
-        }
-        if ($this->session->get("warning")) {
-            $this->view->set("warning", $this->session->get("warning"));
-            $this->session->destroy("warning");
-        }      
     }
-
+    
     /**
      * Carrega um modelo.
      * @access protected
@@ -84,11 +67,11 @@ class Controller {
             case "success":
             case "warning":
                 if (!is_array($msg)) {
-                    $lista = $this->session->get($type) != null ? $this->session->get($type) : array();
+                    $lista = $this->view->session->get($type) != null ? $this->view->session->get($type) : array();
                     $lista[] = $msg;
-                    $this->session->set($type, $lista);
+                    $this->view->session->set($type, $lista);
                 } else {
-                    $this->session->set($type, $msg);
+                    $this->view->session->set($type, $msg);
                 }
                 break;
             default:
@@ -96,5 +79,4 @@ class Controller {
                 break;
         }
     }
-
 }

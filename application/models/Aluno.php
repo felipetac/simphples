@@ -55,11 +55,11 @@ class Aluno extends Model {
     }
 
     public function setAniversario($aniversario) {
-        $this->aniversario = new \DateTime(implode('-',array_reverse(explode('/', $aniversario))));
+        $this->aniversario = $aniversario ? new \DateTime(implode('-',array_reverse(explode('/', $aniversario)))) : '';
     }
 
     public function getAniversario() {        
-        return $this->aniversario->format('d/m/Y');
+        return $this->aniversario ? $this->aniversario->format('d/m/Y') : NULL;
     }
     
     public function setHistorico(Historico $historico) {
@@ -79,21 +79,27 @@ class Aluno extends Model {
     }
     
     public function validate(){
-        $validator = v::attribute('nome', v::allOf(v::string()->setName("NomeIsString"), 
-                                          v::notEmpty()->setName("NomeIsEmpty"))->setName("NomeError"))
-                    ->attribute('aniversario', v::allOf(v::date()->setName("NiverIsDate"), 
-                                               v::minimumAge(18)->setName("NiverMinimumAge"), 
-                                               v::notEmpty()->setName("NiverIsEmpty")));
+        $validator = v::attribute('nome', v::allOf(
+                                        v::string()->setName("NomeIsString"), 
+                                        v::notEmpty()->setName("NomeIsEmpty")
+                                )->setName("NomeError")
+                    )->attribute('aniversario', v::allOf(
+                                        v::date()->setName("NiverIsDate"), 
+                                        v::minimumAge(18)->setName("NiverMinimumAge"), 
+                                        v::notEmpty()->setName("NiverIsEmpty")
+                                )->setName("AniversarioError"));
         try{
             $validator->assert($this);
         } catch (\InvalidArgumentException $e) {
             $this->errors = $e->findMessages(array(
-                'NomeError' => 'Erro(s) no campo "Nome"',
-                'NomeIsString' => 'O "Nome" não é uma String',
-                'NomeIsEmpty' => 'O "Nome" é de preenchimento obrigatório',
-                'NiverIsDate' => 'O "Aniversário" não é uma data válida!',
-                'NiverMinimumAge' => 'O "Aniversário" precisa ser preenchido com uma data igual ou superior a 18 anos',
-                'NiverIsEmpty' => 'O "Aniversário" é de preenchimento obrigatório'
+                'NomeError' => 'Erro(s) no campo "Nome":',
+                'NomeIsString' => '-- O "Nome" não é uma String',
+                'NomeIsEmpty' => '-- O "Nome" é de preenchimento obrigatório',
+                'AniversarioError' => 'Erro(s) no campo "Aniversário":',
+                'NiverIsDate' => '-- O "Aniversário" não é uma data válida!',
+                'NiverMinimumAge' => '-- O "Aniversário" precisa ser preenchido com uma data igual ou superior a 18 anos',
+                'NiverIsEmpty' => '-- O "Aniversário" é de preenchimento obrigatório'
+                
             ));
             return $this->errors;
         }

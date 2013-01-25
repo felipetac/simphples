@@ -11,7 +11,9 @@
 	<tal:block metal:use-macro="form-aluno-nome" />
 	
 	<label for="nome">Aniversario</label>
-	<input type="text" id="aniversario" name="aniversario" style="width: 400px !important;" tal:attributes="value aluno/getAniversario | ''" />
+	<input type="text" id="aniversario" name="aniversario" style="width: 400px !important;"
+	       tal:define="error aluno/errors/AniversarioError | Nothing; wrng string:input-warning"
+	       tal:attributes="value aluno/getAniversario | ''; class php: (error) ? wrng : ''" />
 	<br />
 	
 	<label for="turma">Turma</label>
