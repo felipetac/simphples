@@ -1,5 +1,8 @@
 <div metal:use-macro="lista-professores" tal:omit-tag="">
     <div metal:define-macro="lista-professores" tal:omit-tag="">
+	<div tal:condition="exists: resultado" style="float:right" class="warningMsg msg">
+	    <br /><p>Total de <b tal:content="resultado/getNbResults" /> registros encontrados.</p>
+	</div>
 		<table id="lista-professores" class="result" tal:condition="exists: resultado">
 		    <thead>
 		        <tr>
@@ -9,7 +12,7 @@
 		        </tr>
 		    </thead>
 		    <tbody>
-		        <tr tal:repeat="item resultado">
+		        <tr tal:repeat="item resultado/getCurrentPageResults">
 		        	<td class="ui-widget-content codButton" tal:content="string: PROF${item/getId}"  width="15%" />
 		            <td class="ui-widget-content itemConfirm" tal:content="item/getNome"  width="75%" />
 		            <td class="ui-widget-content" style="text-align: center" width="10%">
@@ -19,6 +22,7 @@
 		        </tr>
 		    </tbody>
 		</table>
+		<tal:block metal:use-macro="application/views/professor/forms.xhtml/pager" />
 		<div tal:condition="not: exists: resultado">
 			<div class="warningMsg ui-state-highlight ui-corner-all msg">
 				<p>

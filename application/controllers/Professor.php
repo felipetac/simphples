@@ -20,10 +20,12 @@ final class Professor extends Controller {
         $this->view->set("title", "Professor");
         $this->model->setParams($params);
         $nome = $this->model->getNome();
-        $result = $this->model->findByName($nome);
+        $page = empty($params['page']) ? 1 : $params['page'];
+        $result = $this->model->findByName($nome, $page);
         $result = empty($result) ? null : $result;
-        $this->view->set("resultado", $result);
+        $this->view->set("resultado", $result);        
         $this->view->set("nome", $nome);
+        
         $this->view->render("professor/index");
     }
 

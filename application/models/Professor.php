@@ -4,6 +4,7 @@ namespace application\models;
 
 use commons\Database,
     commons\Model,
+    Pagerfanta\Pagerfanta,
     Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
@@ -110,11 +111,15 @@ class Professor extends Model {
         }
     }
 
-    public function findByName($nome) {
+    public function findByName($nome, $currentPage=1, $maxPerPage=20) {
         $em = Database::getEntityManager();
         $dql = "SELECT a FROM application\models\Professor a WHERE a.nome LIKE :nome ORDER BY a.nome ASC";
-        return $em->createQuery($dql)
-                ->setParameter("nome", "%".$nome."%")
-                ->getResult();
+        $query = $em->createQuery($dql)
+                ->setParameter("nome", "%".$nome."%");                
+        
+        $pager = new Pagerfanta(new \Pagerfanta\Adapter\DoctrineORMAdapter($query)); 
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+        return $pager;
     }
 }

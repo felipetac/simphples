@@ -22,11 +22,15 @@ final class Aluno extends Controller {
         $this->view->set("title", "Aluno");
         $this->model->setParams($params);
         $nome = $this->model->getNome();
-        $result = $this->model->findByName($nome);
+        $page = empty($params['page']) ? 1 : $params['page'];
+        $result = $this->model->findByName($nome, $page);
         $result = empty($result) ? null : $result;
         $this->view->set("resultado", $result);
         $this->view->set("nome", $nome);
-        $this->view->render("aluno/index");
+        if ($page == 1)
+            $this->view->render("aluno/index");
+        else
+            $this->view->render("aluno/listar-ajax");
     }
 
     public function novo() {

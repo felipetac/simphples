@@ -3,9 +3,10 @@
 namespace application\models;
 
 use commons\Database,
-    commons\Model,
+    commons\Model,    
     application\models\Historico,
     application\models\Turma,
+    Pagerfanta\Pagerfanta,
     Respect\Validation\Validator as v;
 
 /**
@@ -126,11 +127,16 @@ class Aluno extends Model {
         }
     }
 
-    public function findByName($nome) {
+    public function findByName($nome, $currentPage=1, $maxPerPage=20) {        
         $em = Database::getEntityManager();
         $dql = "SELECT a FROM application\models\Aluno a WHERE UPPER(a.nome) LIKE UPPER(:nome) ORDER BY a.nome ASC";
-        return $em->createQuery($dql)
-                ->setParameter("nome", "%".$nome."%")
-                ->getResult();
+        $query = $em->createQuery($dql)
+                ->setParameter("nome", "%".$nome."%");
+        
+        $pager = new Pagerfanta(new \Pagerfanta\Adapter\DoctrineORMAdapter($query)); 
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($currentPage);
+        
+        return $pager;
     }
 }

@@ -6,6 +6,20 @@
 	</div>
 </form>
 
+<form metal:define-macro="pager" tal:condition="resultado/haveToPaginate" id="formPager2" name="formPager2" action="professor/buscar" method="post" class="ui-corner-all">
+	<input type="hidden" id="nome" name="nome" tal:attributes="value nome" />
+	<div style="text-align: center">		
+		<button type="submit" class="btnText" name="page" 
+			tal:attributes="value resultado/getPreviousPage" tal:condition="resultado/hasPreviousPage">Anterior</button>		
+		<button type="submit" name="page"
+			tal:repeat="page php:range(1,resultado.getNbPages())"
+			tal:attributes="value page; class php: resultado.getCurrentPage() == page ? 'disabled btnText' : 'btnText'"
+			tal:content="page" />		
+		<button type="submit" class="btnText" name="page" 
+			tal:attributes="value resultado/getNextPage" tal:condition="resultado/hasNextPage">Proxima</button>
+	</div>
+</form>
+
 <form metal:define-macro="gravar" id="formGravar" action="professor/gravar" method="post" class="ui-corner-all" style="position: relative; top:7px;">
 	<input type="hidden" id="id" name="id" tal:attributes="value id | ''" />
 	<tal:block metal:use-macro="form-professor-nome" />	

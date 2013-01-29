@@ -6,6 +6,14 @@
 	</div>
 </form>
 
+<form metal:define-macro="pager" id="formPager" action="aluno/buscar" method="post" class="ui-corner-all">
+	<input type="hidden" id="nome" name="nome" tal:attributes="value nome" />
+	<input type="hidden" id="page" name="page" tal:attributes="value resultado/getNextPage" />
+	<div style="text-align:center;">
+		<button type="submit" class="btnText">Mais resultados</button>
+	</div>
+</form>
+
 <form metal:define-macro="gravar" id="formGravar" action="aluno/gravar" method="post" class="ui-corner-all" style="position: relative; top:7px;">
 	<input type="hidden" id="id" name="id" tal:attributes="value aluno/getId | ''" />
 	<tal:block metal:use-macro="form-aluno-nome" />

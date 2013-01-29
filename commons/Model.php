@@ -41,7 +41,12 @@ class Model {
         }
         return $entity;
     }
-
+    
+    /* Este método deve ser implmentado nas classes filhas */
+    protected function validate(){
+        return true;
+    }
+    
     public function find($id, $entity = false) {
         $em = Database::getEntityManager();
 
