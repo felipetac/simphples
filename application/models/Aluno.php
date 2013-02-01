@@ -99,8 +99,7 @@ class Aluno extends Model {
                 'AniversarioError' => 'Erro(s) no campo "Aniversário":',
                 'NiverIsDate' => '-- O "Aniversário" não é uma data válida!',
                 'NiverMinimumAge' => '-- O "Aniversário" precisa ser preenchido com uma data igual ou superior a 18 anos',
-                'NiverIsEmpty' => '-- O "Aniversário" é de preenchimento obrigatório'
-                
+                'NiverIsEmpty' => '-- O "Aniversário" é de preenchimento obrigatório'     
             ));
             return $this->errors;
         }
@@ -130,13 +129,10 @@ class Aluno extends Model {
     public function findByName($nome, $currentPage=1, $maxPerPage=20) {        
         $em = Database::getEntityManager();
         $dql = "SELECT a FROM application\models\Aluno a WHERE UPPER(a.nome) LIKE UPPER(:nome) ORDER BY a.nome ASC";
-        $query = $em->createQuery($dql)
-                ->setParameter("nome", "%".$nome."%");
-        
+        $query = $em->createQuery($dql)->setParameter("nome", "%".$nome."%");
         $pager = new Pagerfanta(new \Pagerfanta\Adapter\DoctrineORMAdapter($query)); 
         $pager->setMaxPerPage($maxPerPage);
-        $pager->setCurrentPage($currentPage);
-        
+        $pager->setCurrentPage($currentPage);       
         return $pager;
     }
 }
